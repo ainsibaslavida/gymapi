@@ -65,4 +65,16 @@ public class MemberService {
         this.memberRepository.deleteById(memberIdentifierDTO.cpf());
         return memberIdentifierDTO;
     }
+
+    public MemberDetailsDTO get(String cpf) {
+        Optional<Member> memberExists = this.memberRepository.findById(cpf);
+
+        if (memberExists.isEmpty()) {
+            throw new RuntimeException("The member does not exists.");
+        }
+
+        Member receivedMember = memberExists.get();
+
+        return new MemberDetailsDTO(receivedMember.getCpf(), receivedMember.getName(), receivedMember.getAge(), receivedMember.getAddress(), receivedMember.getPhone(), receivedMember.getPlan(), receivedMember.getCreatedAt(), receivedMember.getActive());
+    }
 }

@@ -36,4 +36,11 @@ public class MemberController {
         MemberIdentifierDTO removed = this.memberService.delete(memberIdentifierDTO);
         return ResponseEntity.ok(new MemberMessageDTO("The member has been deleted.", removed.cpf()));
     }
+
+    @GetMapping("/{cpf}")
+    public ResponseEntity<MemberDetailsDTO> get(@PathVariable String cpf) {
+        MemberDetailsDTO memberDetailsDTO = this.memberService.get(cpf);
+
+        return ResponseEntity.accepted().body(memberDetailsDTO);
+    }
 }
