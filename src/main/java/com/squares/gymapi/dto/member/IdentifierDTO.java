@@ -1,4 +1,4 @@
-package com.squares.gymapi.dto;
+package com.squares.gymapi.dto.member;
 
-public record MemberIdentifierDTO(String cpf) {
+public record IdentifierDTO(String cpf) {
 }

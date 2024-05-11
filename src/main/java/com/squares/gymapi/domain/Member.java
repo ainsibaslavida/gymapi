@@ -37,6 +37,9 @@ public class Member {
     @Column(nullable = true, name = "created_at")
     private LocalDateTime createdAt;
 
+    @Column(nullable = false, name = "last_update")
+    private LocalDateTime lastUpdate;
+
     @Column(nullable = false)
     private Boolean active;
 }

@@ -1,9 +1,9 @@
 package com.squares.gymapi.controllers;
 
-import com.squares.gymapi.dto.MemberDetailsDTO;
-import com.squares.gymapi.dto.MemberIdentifierDTO;
-import com.squares.gymapi.dto.MemberMessageDTO;
-import com.squares.gymapi.dto.MemberRequestDTO;
+import com.squares.gymapi.dto.member.ResponseDTO;
+import com.squares.gymapi.dto.member.IdentifierDTO;
+import com.squares.gymapi.dto.member.MessageResponseDTO;
+import com.squares.gymapi.dto.member.RequestDTO;
 import com.squares.gymapi.services.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
+import org.springframework.http.HttpStatus;
 
 @RestController
 @RequestMapping("/member")
@@ -20,27 +21,26 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping("/create")
-    public ResponseEntity<MemberDetailsDTO> create(@RequestBody @Valid MemberRequestDTO memberRequestDTO, UriComponentsBuilder uriComponentsBuilder) {
-        MemberDetailsDTO createdMember = this.memberService.create(memberRequestDTO);
-        var uri = uriComponentsBuilder.path("/member/{cpf}").buildAndExpand(createdMember.cpf()).toUri();
-        return ResponseEntity.created(uri).body(createdMember);
+    public ResponseEntity<MessageResponseDTO> create(@RequestBody @Valid RequestDTO memberRequestDTO, UriComponentsBuilder uriComponentsBuilder) {
+        this.memberService.create(memberRequestDTO);
+        return new ResponseEntity<>(new MessageResponseDTO("User created successfully!"), HttpStatus.CREATED);
     }
 
     @GetMapping("/list")
-    public ResponseEntity<List<MemberDetailsDTO>> getAll() {
-        return ResponseEntity.accepted().body(this.memberService.getAll());
+    public ResponseEntity<List<ResponseDTO>> list() {
+        return new ResponseEntity<>(this.memberService.list(), HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<MemberMessageDTO> delete(@RequestBody MemberIdentifierDTO memberIdentifierDTO) {
-        MemberIdentifierDTO removed = this.memberService.delete(memberIdentifierDTO);
-        return ResponseEntity.ok(new MemberMessageDTO("The member has been deleted.", removed.cpf()));
+    public ResponseEntity<MessageResponseDTO> delete(@RequestBody IdentifierDTO memberIdentifierDTO) {
+        this.memberService.delete(memberIdentifierDTO);
+        return new ResponseEntity<>(new MessageResponseDTO("The member has been deleted."), HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/{cpf}")
-    public ResponseEntity<MemberDetailsDTO> get(@PathVariable String cpf) {
-        MemberDetailsDTO memberDetailsDTO = this.memberService.get(cpf);
+    public ResponseEntity<ResponseDTO> get(@PathVariable String cpf) {
+        ResponseDTO memberDetailsDTO = this.memberService.get(cpf);
 
-        return ResponseEntity.accepted().body(memberDetailsDTO);
+        return new ResponseEntity<>(memberDetailsDTO, HttpStatus.OK);
     }
 }

@@ -1,9 +1,9 @@
 package com.squares.gymapi.services;
 
 import com.squares.gymapi.domain.Member;
-import com.squares.gymapi.dto.MemberDetailsDTO;
-import com.squares.gymapi.dto.MemberIdentifierDTO;
-import com.squares.gymapi.dto.MemberRequestDTO;
+import com.squares.gymapi.dto.member.ResponseDTO;
+import com.squares.gymapi.dto.member.IdentifierDTO;
+import com.squares.gymapi.dto.member.RequestDTO;
 import com.squares.gymapi.repositories.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,10 +17,10 @@ import java.util.Optional;
 public class MemberService {
     private final MemberRepository memberRepository;
 
-    public MemberDetailsDTO create(MemberRequestDTO memberRequestDTO) {
-        Optional<Member> member = this.memberRepository.findById(memberRequestDTO.cpf());
+    public void create(RequestDTO memberRequestDTO) {
+        Optional<Member> optionalMember = this.memberRepository.findById(memberRequestDTO.cpf());
 
-        if (member.isPresent()) {
+        if (optionalMember.isPresent()) {
             throw new RuntimeException("The member already exists.");
         }
 
@@ -32,18 +32,17 @@ public class MemberService {
                 memberRequestDTO.phone(),
                 memberRequestDTO.plan(),
                 LocalDateTime.now(),
+                LocalDateTime.now(),
                 Boolean.TRUE
         );
 
-        Member createdMember = this.memberRepository.save(createMember);
-
-        return new MemberDetailsDTO(createdMember.getCpf(), createdMember.getName(), createdMember.getAge(), createdMember.getAddress(), createdMember.getPhone(), createdMember.getPlan(), createdMember.getCreatedAt(), createdMember.getActive());
+        this.memberRepository.save(createMember);
     }
 
-    public List<MemberDetailsDTO> getAll() {
+    public List<ResponseDTO> list() {
         List<Member> members = this.memberRepository.findAll();
 
-        return members.stream().map(member -> new MemberDetailsDTO(
+        return members.stream().map(member -> new ResponseDTO(
                 member.getCpf(),
                 member.getName(),
                 member.getAge(),
@@ -51,22 +50,22 @@ public class MemberService {
                 member.getPhone(),
                 member.getPlan(),
                 member.getCreatedAt(),
+                member.getLastUpdate(),
                 member.getActive())
         ).toList();
     }
 
-    public MemberIdentifierDTO delete(MemberIdentifierDTO memberIdentifierDTO) {
-        Optional<Member> memberExists = this.memberRepository.findById(memberIdentifierDTO.cpf());
+    public void delete(IdentifierDTO memberIdentifierDTO) {
+        Optional<Member> optionalMember = this.memberRepository.findById(memberIdentifierDTO.cpf());
 
-        if (memberExists.isEmpty()) {
-            throw new RuntimeException("The user does not exists.");
+        if (optionalMember.isEmpty()) {
+            throw new RuntimeException("The member does not exists.");
         }
 
         this.memberRepository.deleteById(memberIdentifierDTO.cpf());
-        return memberIdentifierDTO;
     }
 
-    public MemberDetailsDTO get(String cpf) {
+    public ResponseDTO get(String cpf) {
         Optional<Member> memberExists = this.memberRepository.findById(cpf);
 
         if (memberExists.isEmpty()) {
@@ -75,6 +74,6 @@ public class MemberService {
 
         Member receivedMember = memberExists.get();
 
-        return new MemberDetailsDTO(receivedMember.getCpf(), receivedMember.getName(), receivedMember.getAge(), receivedMember.getAddress(), receivedMember.getPhone(), receivedMember.getPlan(), receivedMember.getCreatedAt(), receivedMember.getActive());
+        return new ResponseDTO(receivedMember.getCpf(), receivedMember.getName(), receivedMember.getAge(), receivedMember.getAddress(), receivedMember.getPhone(), receivedMember.getPlan(), receivedMember.getCreatedAt(), receivedMember.getLastUpdate(), receivedMember.getActive());
     }
 }

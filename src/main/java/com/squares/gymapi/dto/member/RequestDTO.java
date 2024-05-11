@@ -1,9 +1,9 @@
-package com.squares.gymapi.dto;
+package com.squares.gymapi.dto.member;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public record MemberRequestDTO(
+public record RequestDTO(
         @NotBlank String cpf,
         @NotBlank String name,
         @NotNull Integer age,
