@@ -1,5 +1,7 @@
 package com.squares.gymapi.dto;
 
+import com.squares.gymapi.domain.types.Plans;
+
 import java.time.LocalDateTime;
 
 public record ResponseDTO(
@@ -8,7 +10,7 @@ public record ResponseDTO(
         Integer age,
         String address,
         String phone,
-        String plan,
+        Plans plan,
         LocalDateTime created_at,
         LocalDateTime last_update,
         Boolean active) {

@@ -1,5 +1,6 @@
 package com.squares.gymapi.domain;
 
+import com.squares.gymapi.domain.types.Plans;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,7 +30,8 @@ public class Member {
     private String phone;
 
     @Column(nullable = false)
-    private String plan;
+    @Enumerated(EnumType.STRING)
+    private Plans plan;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
