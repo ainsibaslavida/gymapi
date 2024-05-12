@@ -1,4 +1,4 @@
-package com.squares.gymapi.exceptions.response;
+package com.squares.gymapi.infra.response;
 
 import org.springframework.http.HttpStatus;
 

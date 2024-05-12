@@ -2,7 +2,7 @@ package com.squares.gymapi.infra;
 
 import com.squares.gymapi.exceptions.MemberAlreadyExistsException;
 import com.squares.gymapi.exceptions.MemberNotExistsException;
-import com.squares.gymapi.exceptions.response.ErrorMessage;
+import com.squares.gymapi.infra.response.ErrorMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
