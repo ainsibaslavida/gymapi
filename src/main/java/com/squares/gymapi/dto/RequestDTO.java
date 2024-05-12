@@ -9,5 +9,6 @@ public record RequestDTO(
         @NotNull Integer age,
         @NotBlank String address,
         @NotBlank String phone,
-        @NotBlank String plan) {
+        @NotBlank String plan,
+        @NotNull Boolean active) {
 }

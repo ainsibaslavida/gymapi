@@ -77,4 +77,28 @@ public class MemberService {
 
         return new ResponseDTO(receivedMember.getCpf(), receivedMember.getName(), receivedMember.getAge(), receivedMember.getAddress(), receivedMember.getPhone(), receivedMember.getPlan(), receivedMember.getCreatedAt(), receivedMember.getLastUpdate(), receivedMember.getActive());
     }
+
+    public void update(String id, Member member) {
+        Optional<Member> optionalMember = this.memberRepository.findById(id);
+
+        if (optionalMember.isEmpty()) {
+            throw new MemberNotExistsException();
+        }
+
+        /*
+        * O objeto retornado é usado como base para atualização.
+        * Os dados CPF e created_at são repassados.
+        * */
+        Member updateMember = optionalMember.get();
+
+        updateMember.setName(member.getName());
+        updateMember.setAge(member.getAge());
+        updateMember.setAddress(member.getAddress());
+        updateMember.setPhone(member.getPhone());
+        updateMember.setPlan(member.getPlan());
+        updateMember.setLastUpdate(LocalDateTime.now());
+        updateMember.setActive(member.getActive());
+
+        this.memberRepository.save(updateMember);
+    }
 }

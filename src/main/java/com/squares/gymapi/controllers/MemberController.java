@@ -1,5 +1,6 @@
 package com.squares.gymapi.controllers;
 
+import com.squares.gymapi.domain.Member;
 import com.squares.gymapi.dto.ResponseDTO;
 import com.squares.gymapi.dto.IdentifierDTO;
 import com.squares.gymapi.dto.MessageResponseDTO;
@@ -41,5 +42,25 @@ public class MemberController {
     public ResponseEntity<ResponseDTO> get(@PathVariable String cpf) {
         ResponseDTO memberDetailsDTO = this.memberService.get(cpf);
         return ResponseEntity.status(HttpStatus.OK).body(memberDetailsDTO);
+    }
+
+    @PostMapping("/update")
+    public ResponseEntity<MessageResponseDTO> update(@RequestBody RequestDTO member) {
+        this.memberService.update(member.cpf(), requestToMember(member));
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(new MessageResponseDTO("Member information has been updated."));
+    }
+
+    private Member requestToMember(RequestDTO request) {
+        Member requestToMember = new Member();
+
+        requestToMember.setCpf(request.cpf());
+        requestToMember.setName(request.name());
+        requestToMember.setAge(request.age());
+        requestToMember.setAddress(request.address());
+        requestToMember.setPhone(request.phone());
+        requestToMember.setPlan(request.plan());
+        requestToMember.setActive(request.active());
+
+        return requestToMember;
     }
 }
