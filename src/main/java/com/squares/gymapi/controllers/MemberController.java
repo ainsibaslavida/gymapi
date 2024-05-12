@@ -23,24 +23,23 @@ public class MemberController {
     @PostMapping("/create")
     public ResponseEntity<MessageResponseDTO> create(@RequestBody @Valid RequestDTO memberRequestDTO, UriComponentsBuilder uriComponentsBuilder) {
         this.memberService.create(memberRequestDTO);
-        return new ResponseEntity<>(new MessageResponseDTO("User created successfully!"), HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new MessageResponseDTO("User created successfully!"));
     }
 
     @GetMapping("/list")
     public ResponseEntity<List<ResponseDTO>> list() {
-        return new ResponseEntity<>(this.memberService.list(), HttpStatus.ACCEPTED);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(this.memberService.list());
     }
 
     @DeleteMapping("/delete")
     public ResponseEntity<MessageResponseDTO> delete(@RequestBody IdentifierDTO memberIdentifierDTO) {
         this.memberService.delete(memberIdentifierDTO.cpf());
-        return new ResponseEntity<>(new MessageResponseDTO("The member has been deleted."), HttpStatus.ACCEPTED);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(new MessageResponseDTO("The member has been deleted."));
     }
 
     @GetMapping("/{cpf}")
     public ResponseEntity<ResponseDTO> get(@PathVariable String cpf) {
         ResponseDTO memberDetailsDTO = this.memberService.get(cpf);
-
-        return new ResponseEntity<>(memberDetailsDTO, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(memberDetailsDTO);
     }
 }

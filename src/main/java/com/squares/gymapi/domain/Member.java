@@ -34,7 +34,7 @@ public class Member {
     @Column(nullable = false)
     private String plan;
 
-    @Column(nullable = true, name = "created_at")
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @Column(nullable = false, name = "last_update")
