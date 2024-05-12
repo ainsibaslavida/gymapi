@@ -1,4 +1,4 @@
-package com.squares.gymapi.dto.member;
+package com.squares.gymapi.dto;
 
 import java.time.LocalDateTime;
 

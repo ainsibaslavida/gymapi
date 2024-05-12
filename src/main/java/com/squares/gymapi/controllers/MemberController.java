@@ -1,9 +1,9 @@
 package com.squares.gymapi.controllers;
 
-import com.squares.gymapi.dto.member.ResponseDTO;
-import com.squares.gymapi.dto.member.IdentifierDTO;
-import com.squares.gymapi.dto.member.MessageResponseDTO;
-import com.squares.gymapi.dto.member.RequestDTO;
+import com.squares.gymapi.dto.ResponseDTO;
+import com.squares.gymapi.dto.IdentifierDTO;
+import com.squares.gymapi.dto.MessageResponseDTO;
+import com.squares.gymapi.dto.RequestDTO;
 import com.squares.gymapi.services.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +33,7 @@ public class MemberController {
 
     @DeleteMapping("/delete")
     public ResponseEntity<MessageResponseDTO> delete(@RequestBody IdentifierDTO memberIdentifierDTO) {
-        this.memberService.delete(memberIdentifierDTO);
+        this.memberService.delete(memberIdentifierDTO.cpf());
         return new ResponseEntity<>(new MessageResponseDTO("The member has been deleted."), HttpStatus.ACCEPTED);
     }
 

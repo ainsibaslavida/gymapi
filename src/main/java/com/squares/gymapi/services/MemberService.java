@@ -1,9 +1,10 @@
 package com.squares.gymapi.services;
 
 import com.squares.gymapi.domain.Member;
-import com.squares.gymapi.dto.member.ResponseDTO;
-import com.squares.gymapi.dto.member.IdentifierDTO;
-import com.squares.gymapi.dto.member.RequestDTO;
+import com.squares.gymapi.dto.ResponseDTO;
+import com.squares.gymapi.dto.RequestDTO;
+import com.squares.gymapi.exceptions.MemberAlreadyExistsException;
+import com.squares.gymapi.exceptions.MemberNotExistsException;
 import com.squares.gymapi.repositories.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class MemberService {
         Optional<Member> optionalMember = this.memberRepository.findById(memberRequestDTO.cpf());
 
         if (optionalMember.isPresent()) {
-            throw new RuntimeException("The member already exists.");
+            throw new MemberAlreadyExistsException();
         }
 
         Member createMember = new Member(
@@ -55,21 +56,21 @@ public class MemberService {
         ).toList();
     }
 
-    public void delete(IdentifierDTO memberIdentifierDTO) {
-        Optional<Member> optionalMember = this.memberRepository.findById(memberIdentifierDTO.cpf());
+    public void delete(String id) {
+        Optional<Member> optionalMember = this.memberRepository.findById(id);
 
         if (optionalMember.isEmpty()) {
-            throw new RuntimeException("The member does not exists.");
+            throw new MemberNotExistsException();
         }
 
-        this.memberRepository.deleteById(memberIdentifierDTO.cpf());
+        this.memberRepository.deleteById(id);
     }
 
-    public ResponseDTO get(String cpf) {
-        Optional<Member> memberExists = this.memberRepository.findById(cpf);
+    public ResponseDTO get(String id) {
+        Optional<Member> memberExists = this.memberRepository.findById(id);
 
         if (memberExists.isEmpty()) {
-            throw new RuntimeException("The member does not exists.");
+            throw new MemberNotExistsException();
         }
 
         Member receivedMember = memberExists.get();
