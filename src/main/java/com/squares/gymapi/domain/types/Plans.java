@@ -4,5 +4,5 @@ public enum Plans {
     Basic,
     Premium,
     Pro,
-    Black
+    Black;
 }

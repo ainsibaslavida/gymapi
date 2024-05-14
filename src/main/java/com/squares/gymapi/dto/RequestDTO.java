@@ -1,6 +1,7 @@
 package com.squares.gymapi.dto;
 
 import com.squares.gymapi.domain.types.Plans;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -10,6 +11,6 @@ public record RequestDTO(
         @NotNull Integer age,
         @NotBlank String address,
         @NotBlank String phone,
-        @NotBlank Plans plan,
+        @NotNull Plans plan,
         @NotNull Boolean active) {
 }
