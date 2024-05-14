@@ -1,4 +1,6 @@
 package com.squares.gymapi.dto;
 
-public record IdentifierDTO(String cpf) {
+import org.hibernate.validator.constraints.br.CPF;
+
+public record IdentifierDTO(@CPF String cpf) {
 }

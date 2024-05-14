@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
+
 import org.springframework.http.HttpStatus;
 
 @RestController
@@ -33,7 +34,7 @@ public class MemberController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<MessageResponseDTO> delete(@RequestBody IdentifierDTO memberIdentifierDTO) {
+    public ResponseEntity<MessageResponseDTO> delete(@RequestBody @Valid IdentifierDTO memberIdentifierDTO) {
         this.memberService.delete(memberIdentifierDTO.cpf());
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(new MessageResponseDTO("The member has been deleted."));
     }
@@ -45,7 +46,7 @@ public class MemberController {
     }
 
     @PostMapping("/update")
-    public ResponseEntity<MessageResponseDTO> update(@RequestBody RequestDTO member) {
+    public ResponseEntity<MessageResponseDTO> update(@RequestBody @Valid RequestDTO member) {
         this.memberService.update(member.cpf(), requestToMember(member));
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(new MessageResponseDTO("Member information has been updated."));
     }
