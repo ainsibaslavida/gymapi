@@ -8,7 +8,9 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "member")
-@Data
+@Getter
+@Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class Member {

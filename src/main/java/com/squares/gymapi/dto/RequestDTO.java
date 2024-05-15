@@ -8,11 +8,19 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public record RequestDTO(
-        @NotBlank @CPF String cpf,
-        @NotBlank String name,
-        @NotNull Integer age,
-        @NotBlank String address,
-        @NotBlank String phone,
-        @NotNull Plans plan,
-        @NotNull Boolean active) {
+        @NotBlank
+        @CPF
+        String cpf,
+        @NotBlank
+        String name,
+        @NotNull
+        Integer age,
+        @NotBlank
+        String address,
+        @NotBlank
+        String phone,
+        @NotNull
+        Plans plan,
+        @NotNull
+        Boolean active) {
 }

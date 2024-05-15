@@ -2,6 +2,7 @@ package com.squares.gymapi.controllers;
 
 import com.squares.gymapi.domain.Member;
 import com.squares.gymapi.dto.ResponseDTO;
+import com.squares.gymapi.infra.response.ErrorMessage;
 import com.squares.gymapi.dto.IdentifierDTO;
 import com.squares.gymapi.dto.MessageResponseDTO;
 import com.squares.gymapi.dto.RequestDTO;
@@ -9,6 +10,7 @@ import com.squares.gymapi.services.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -49,6 +51,13 @@ public class MemberController {
     public ResponseEntity<MessageResponseDTO> update(@RequestBody @Valid RequestDTO member) {
         this.memberService.update(member.cpf(), requestToMember(member));
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(new MessageResponseDTO("Member information has been updated."));
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorMessage> methodArgumentNotValidHandler(MethodArgumentNotValidException exception) {
+        ErrorMessage errorMessage = new ErrorMessage(HttpStatus.BAD_REQUEST, "The input object has errors.");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
     }
 
     private Member requestToMember(RequestDTO request) {
