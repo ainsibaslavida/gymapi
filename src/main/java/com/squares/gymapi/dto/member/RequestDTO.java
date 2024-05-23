@@ -8,7 +8,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public record RequestDTO(
-        @NotBlank
         @CPF
         String cpf,
         @NotBlank
