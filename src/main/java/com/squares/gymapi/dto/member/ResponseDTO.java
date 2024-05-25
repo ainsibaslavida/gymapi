@@ -1,4 +1,4 @@
-package com.squares.gymapi.dto;
+package com.squares.gymapi.dto.member;
 
 import com.squares.gymapi.domain.types.Plans;
 

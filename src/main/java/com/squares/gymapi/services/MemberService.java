@@ -1,8 +1,8 @@
 package com.squares.gymapi.services;
 
 import com.squares.gymapi.domain.Member;
-import com.squares.gymapi.dto.ResponseDTO;
-import com.squares.gymapi.dto.RequestDTO;
+import com.squares.gymapi.dto.member.ResponseDTO;
+import com.squares.gymapi.dto.member.RequestDTO;
 import com.squares.gymapi.exceptions.MemberAlreadyExistsException;
 import com.squares.gymapi.exceptions.MemberNotExistsException;
 import com.squares.gymapi.repositories.MemberRepository;

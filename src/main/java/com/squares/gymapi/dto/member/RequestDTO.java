@@ -1,4 +1,4 @@
-package com.squares.gymapi.dto;
+package com.squares.gymapi.dto.member;
 
 import org.hibernate.validator.constraints.br.CPF;
 

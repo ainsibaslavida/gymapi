@@ -1,11 +1,11 @@
 package com.squares.gymapi.controllers;
 
 import com.squares.gymapi.domain.Member;
-import com.squares.gymapi.dto.ResponseDTO;
-import com.squares.gymapi.infra.response.ErrorMessage;
-import com.squares.gymapi.dto.IdentifierDTO;
 import com.squares.gymapi.dto.MessageResponseDTO;
-import com.squares.gymapi.dto.RequestDTO;
+import com.squares.gymapi.dto.member.ResponseDTO;
+import com.squares.gymapi.infra.response.ErrorMessage;
+import com.squares.gymapi.dto.member.IdentifierDTO;
+import com.squares.gymapi.dto.member.RequestDTO;
 import com.squares.gymapi.services.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
